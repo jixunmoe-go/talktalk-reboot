@@ -1,0 +1,24 @@
+= TalkTalk (HuaWei) HG633 Router reboot
+
+[qanda]
+Why reboot the router?::
+  When using TalkTalk's HuaWei HG633 router, the internet speed drops significantly
+    after keeping the router running for a few days.
+  No idea why this is happening, but reboot seems to solve the issue.
+Why golang?::
+  A single executable for embedded devices (e.g. raspberry pi) is preferred compared
+    to other languages (e.g. node) that come with _a lot_ of small files scattering around.
+
+== Usage
+
+[source,shell script]
+----
+# Password only (assume the router is in 192.168.1.1 and the username is admin)
+/path/to/talktalk-reboot -pass "SECRET"
+
+# Full form (with some non-standard settings)
+/path/to/talktalk-reboot -url "http://192.168.1.1" -name "admin" -pass "SECRET"
+----
+
+For executables, see link:https://github.com/jixunmoe/talktalk-reboot-go/releases[Release]
+  and link:https://github.com/jixunmoe/talktalk-reboot-go/actions[Actions].

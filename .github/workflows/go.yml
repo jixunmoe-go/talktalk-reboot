@@ -1,0 +1,119 @@
+name: Go
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Set up Go 1.14
+        uses: actions/setup-go@v2
+        with:
+          go-version: ^1.14
+        id: go
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - name: Get dependencies
+        run: |
+          go get -v -t -d ./...
+          if [ -f Gopkg.toml ]; then
+              curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+              dep ensure
+          fi
+
+      - name: Build
+        run: make releases -j$(nproc)
+
+      - name: Upload Build Artifact (darwin-amd64)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-darwin-amd64-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (freebsd-386)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-freebsd-386-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (freebsd-amd64)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-freebsd-amd64-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-386)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-386-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-amd64)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-amd64-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-armv5)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-armv5-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-armv6)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-armv6-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-armv7)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-armv7-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-armv8)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-armv8-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-mips64)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-mips64-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-mips64le)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-mips64le-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-mips-hardfloat)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-mips-hardfloat-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-mipsle-hardfloat)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-mipsle-hardfloat-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-mipsle-softfloat)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-mipsle-softfloat-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (linux-mips-softfloat)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-linux-mips-softfloat-$(git describe --tags --always).gz
+
+      - name: Upload Build Artifact (windows-386)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-windows-386-$(git describe --tags --always).zip
+
+      - name: Upload Build Artifact (windows-amd64)
+        uses: actions/upload-artifact@v2
+        with:
+          path: bin/talktalk-reboot-windows-amd64-$(git describe --tags --always).zip
+
