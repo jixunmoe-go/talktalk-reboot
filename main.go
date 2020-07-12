@@ -19,7 +19,7 @@ func main() {
 	flag.StringVar(&password, "pass", "S3CR3T", "admin password")
 	flag.Parse()
 
-	l := log.New(os.Stderr, "INFO", 0)
+	l := log.New(os.Stderr, "", 0)
 	l.Printf("talktalk-reboot (ver %s, build time %s)\n", Version, BuildTime)
 	l.Println("")
 
