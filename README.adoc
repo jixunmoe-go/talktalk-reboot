@@ -22,3 +22,12 @@ Why golang?::
 
 For executables, see link:https://github.com/jixunmoe/talktalk-reboot-go/releases[Release]
   and link:https://github.com/jixunmoe/talktalk-reboot-go/actions[Actions].
+
+== crontab
+
+You can also setup `crontab` to reboot server at `04:30 AM` each day:
+
+[source,text]
+----
+30 4 * * * nobody /path/to/talktalk-reboot -pass "SECRET"
+----
